@@ -1,0 +1,43 @@
+name: 'CodeQL Scan'
+on:
+  workflow_call:
+    inputs:
+      language:
+        description: 'Programming language for CodeQL analysis'
+        required: true
+        type: string
+      path:
+        description: 'Path of code to be scanned'
+        required: true
+        type: string
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ inputs.language }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          checkout_path: ${{ inputs.path }}
