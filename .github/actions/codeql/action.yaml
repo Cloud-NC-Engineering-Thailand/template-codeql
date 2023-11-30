@@ -1,0 +1,29 @@
+name: "scan code"
+description: "scan code programming language"
+
+inputs:
+  language:
+    description: 'Programming language for CodeQL analysis'
+    required: true
+  path:
+     required: true
+     description: "Path of code that want scan"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ inputs.language }}
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        checkout_path: ${{ inputs.path }}
