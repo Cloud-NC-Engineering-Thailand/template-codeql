@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Run CodeQL Analysis for dotnet
+      - name: Run CodeQL Analysis for terraform
         uses: ./.github/actions/iac-codeql
         with:
           path: terraform-code-folder
