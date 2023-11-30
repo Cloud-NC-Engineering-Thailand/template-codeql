@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run CodeQL Analysis for dotnet
-        uses: ./.github/actions/codeql/action.yaml
+        uses: ./.github/actions/codeql
         with:
           language: 'csharp'
           path: dotnet-code-folder
@@ -33,7 +33,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run CodeQL Analysis for Python
-        uses: ./.github/actions/codeql/action.yaml
+        uses: ./.github/actions/codeql
         with:
           language: 'python'
           path: python-code-folder
@@ -48,7 +48,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run CodeQL Analysis for Java
-        uses: ./.github/actions/codeql/action.yaml
+        uses: ./.github/actions/codeql
         with:
           language: 'java'
           path: java-code-folder
