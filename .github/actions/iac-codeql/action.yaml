@@ -1,0 +1,22 @@
+name: "scan iac code"
+description: "scan code programming iac language"
+
+inputs:
+  path:
+     required: true
+     description: "Path of code that want scan"
+
+runs:
+  using: "composite"
+  steps:
+    
+    - name: Initialize and Analyze IaC
+      id: codeql_iac
+      uses: advanced-security/codeql-extractor-iac@main
+      with:
+        source-root: ${{ inputs.path }}
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ steps.codeql_iac.outputs.sarif }}
