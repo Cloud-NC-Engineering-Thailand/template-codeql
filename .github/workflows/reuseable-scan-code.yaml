@@ -10,6 +10,7 @@ on:
         description: 'Path of code to be scanned'
         required: true
         type: string
+    
 
 jobs:
   analyze:
