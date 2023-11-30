@@ -1,15 +1,9 @@
 name: 'CodeQL Scan'
 on:
-  workflow_call:
-    inputs:
-      language:
-        description: 'Programming language for CodeQL analysis'
-        required: true
-        type: string
-      path:
-        description: 'Path of code to be scanned'
-        required: true
-        type: string
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   call-workflow-scan-python:
