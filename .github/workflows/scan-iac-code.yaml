@@ -1,5 +1,5 @@
 # File: .github/workflows/main.yml
-name: scan code
+name: scan iac code
 
 on:
   push:
