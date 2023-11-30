@@ -1,9 +1,11 @@
-name: 'CodeQL Iac Scan'
+name: 'CodeQL IAC Scan'
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_call:
+    inputs:
+      path:
+        description: 'Path of code to be scanned'
+        required: true
+        type: string
 
 jobs:
   analyze:
