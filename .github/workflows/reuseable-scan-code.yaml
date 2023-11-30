@@ -1,7 +1,11 @@
-name: 'CodeQL IAC Scan'
+name: 'CodeQL Scan'
 on:
   workflow_call:
     inputs:
+      language:
+        description: 'Programming language for CodeQL analysis'
+        required: true
+        type: string
       path:
         description: 'Path of code to be scanned'
         required: true
@@ -16,17 +20,24 @@ jobs:
       contents: read
       security-events: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ inputs.language }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Initialize and Analyze IaC
-        id: codeql_iac
-        uses: advanced-security/codeql-extractor-iac@main
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
         with:
-          source-root: ${{ inputs.path }}
+          languages: ${{ matrix.language }}
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
         with:
-          sarif_file: ${{ steps.codeql_iac.outputs.sarif }}
+          checkout_path: ${{ inputs.path }}
